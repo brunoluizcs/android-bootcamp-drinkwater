@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(),
 
         //TODO: 008 - Realize a chamada da função updateWaterCount
 
-        textview_quantity.setOnClickListener {
+        imageview_cup_icon.setOnClickListener {
             //TODO: 009 - Chame a função incrementWaterHandler
         }
 

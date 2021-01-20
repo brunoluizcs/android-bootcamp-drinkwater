@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/imageview_cup_icon"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/cup_water"
+        android:src="@drawable/beer_outline"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
