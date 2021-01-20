@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Drink Water</string>
+    <string name="drink_water_tip">clique no copo cada vez que tiver tomado um copo de água para atualizar o contador.</string>
+    <string name="description_water_cup">copo de água</string>
+</resources>
