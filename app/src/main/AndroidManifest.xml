@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
 
-        <!-- TODO: 006 Declare DrinkWaterReminderIntentService no Android Manifest -->
+        <service android:name="com.everis.bootcamp.sync.DrinkWaterReminderIntentService"
+                 android:exported="false"/>
 </application>
 
 </manifest>
