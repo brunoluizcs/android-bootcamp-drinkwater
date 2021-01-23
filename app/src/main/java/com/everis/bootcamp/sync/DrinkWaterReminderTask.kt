@@ -11,10 +11,10 @@ class DrinkWaterReminderTask {
 
         //TODO: 002 - Crie uma função chamada incrementChargingReminder que receba como parametro o context
         // - esta função deve chamar PreferencesUtils.incrementChargingReminderCount
-        // - esta função deve chamar NotificationUtils.remindUserBecauseCharging
+        // - esta função deve chamar remindUserBecauseCharging
 
 
-        //TODO: 003 - Inclua nesta função a chamada para NotificationUtils.clearAllNotifications para limpar a notificação se usuário tomar agua
+        //TODO: 003 - Inclua nesta função a chamada para clearAllNotifications para limpar a notificação se usuário tomar agua
         private fun incrementWaterCount(context: Context) = PreferencesUtils.incrementWaterCount(context)
 
 
@@ -22,7 +22,7 @@ class DrinkWaterReminderTask {
             if (ACTION_INCREMENT_WATER_COUNT == action){
                 incrementWaterCount(context)
             }
-            //TODO: 004 - acrescente um else na função para chamar incrementWaterCount quando a action for igual a ACTION_CHARGING_REMINDER
+            //TODO: 004 - acrescente um else na função para chamar incrementChargingReminder quando a action for igual a ACTION_CHARGING_REMINDER
         }
     }
 }

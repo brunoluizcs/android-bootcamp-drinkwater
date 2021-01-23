@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(),
         updateWaterCount()
         //TODO 020 - faça a chamada do metodo updateChargingReminderCount
 
-        //TODO 018 - Realize o agendamento do serviço chamando DrinkWaterReminderUtils.scheduleChargingReminder
+        //TODO 017 - Realize o agendamento do serviço chamando scheduleChargingReminder
 
         imageview_cup_icon.setOnClickListener {
             incrementWaterHandler()
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(),
         textview_quantity.text = "$count"
     }
 
-    //TODO: 019 - Crie uma função chamada updateChargingReminderCount
+    //TODO: 018 - Crie uma função chamada updateChargingReminderCount
     /*
      * Para atualizar a quantidade de vezes que o usuário foi notificado
      */
@@ -57,5 +57,7 @@ class MainActivity : AppCompatActivity(),
         if (PreferencesUtils.KEY_WATER_COUNT == key) {
             updateWaterCount()
         }
+        //TODO: 019 - inclua uma nova verificação caso a key seja igual a constante KEY_CHARGING_REMINDER_COUNT
+        //faça a chamada do méotodo updateChargingReminderCount
     }
 }

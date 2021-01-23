@@ -15,7 +15,7 @@ class DrinkWaterReminderJobService {
        Dentro de onStartJob crie a classe anonima backgroundTask
     */
 
-    //TODO: 008 - Sobrescreva o método doInBackground e faça a chamada do método RemiderTasks.executeTask informando a action ReminderTasks.ACTION_CHARGING_REMINDER
+    //TODO: 008 - Sobrescreva o método doInBackground e faça a chamada do método DrinkWaterRemiderTasks.executeTask informando a action ReminderTasks.ACTION_CHARGING_REMINDER
 
     /*
      * TODO: 009 - Sobrescreva o método onPostExecute chame o método jobFinished informando o params e false

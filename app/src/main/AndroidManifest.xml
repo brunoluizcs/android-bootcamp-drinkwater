@@ -22,7 +22,7 @@
         <service android:name="com.everis.bootcamp.sync.DrinkWaterReminderIntentService"
                  android:exported="false"/>
 
-        <!-- TODO: 013 - Incluir o DrinkWaterReminderJobService no manifest -->
+        <!-- TODO: 013 - Incluir o DrinkWaterReminderJobService no manifest inclua a permissao android.permission.BIND_JOB_SERVICE -->
 </application>
 
 </manifest>
