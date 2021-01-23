@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import com.everis.bootcamp.drinkwater.R
 
 
-private val WATER_REMINDER_NOTIFICATION_ID = 1138
-private val WATER_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel"
+private const val WATER_REMINDER_NOTIFICATION_ID = 1138
+private const val WATER_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel"
 
 fun clearAllNotifications(context: Context) {
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

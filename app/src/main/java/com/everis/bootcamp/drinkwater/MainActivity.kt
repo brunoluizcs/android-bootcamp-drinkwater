@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.everis.bootcamp.sync.DrinkWaterReminderIntentService
 import com.everis.bootcamp.sync.DrinkWaterReminderTask
 import com.everis.bootcamp.utils.PreferencesUtils
+import com.everis.bootcamp.sync.scheduleChargingReminder
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -19,9 +20,9 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         updateWaterCount()
-        //TODO 020 - faça a chamada do metodo updateChargingReminderCount
+        updateChargingReminderCount()
 
-        //TODO 018 - Realize o agendamento do serviço chamando DrinkWaterReminderUtils.scheduleChargingReminder
+        scheduleChargingReminder(this)
 
         imageview_cup_icon.setOnClickListener {
             incrementWaterHandler()
@@ -36,10 +37,11 @@ class MainActivity : AppCompatActivity(),
         textview_quantity.text = "$count"
     }
 
-    //TODO: 019 - Crie uma função chamada updateChargingReminderCount
-    /*
-     * Para atualizar a quantidade de vezes que o usuário foi notificado
-     */
+    fun updateChargingReminderCount() {
+        val count : Int = PreferencesUtils.getChargingReminderCount(this)
+        val chargingFormatted = getString(R.string.charge_notification_count, count)
+        textview_charging_reminder.text = chargingFormatted
+    }
 
     fun incrementWaterHandler() {
         val intent = Intent(this, DrinkWaterReminderIntentService::class.java)
@@ -56,6 +58,8 @@ class MainActivity : AppCompatActivity(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (PreferencesUtils.KEY_WATER_COUNT == key) {
             updateWaterCount()
+        } else if (PreferencesUtils.KEY_CHARGING_REMINDER_COUNT == key) {
+            updateChargingReminderCount()
         }
     }
 }

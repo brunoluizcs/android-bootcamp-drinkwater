@@ -2,27 +2,31 @@ package com.everis.bootcamp.sync
 
 import android.content.Context
 import com.everis.bootcamp.utils.PreferencesUtils
+import com.everis.bootcamp.utils.clearAllNotifications
+import com.everis.bootcamp.utils.remindUserBecauseCharging
 
 
 class DrinkWaterReminderTask {
     companion object {
         const val ACTION_INCREMENT_WATER_COUNT = "action_increment_water_count"
-        //TODO: 001 - Crie uma constante do tipo string chamada ACTION_CHARGING_REMINDER
+        const val ACTION_CHARGING_REMINDER = "action_charging_reminder"
 
-        //TODO: 002 - Crie uma função chamada incrementChargingReminder que receba como parametro o context
-        // - esta função deve chamar PreferencesUtils.incrementChargingReminderCount
-        // - esta função deve chamar NotificationUtils.remindUserBecauseCharging
+        fun incrementChargingReminder(context: Context) {
+            PreferencesUtils.incrementChargingReminderCount(context)
+            remindUserBecauseCharging(context)
+        }
 
-
-        //TODO: 003 - Inclua nesta função a chamada para NotificationUtils.clearAllNotifications para limpar a notificação se usuário tomar agua
-        private fun incrementWaterCount(context: Context) = PreferencesUtils.incrementWaterCount(context)
-
+        private fun incrementWaterCount(context: Context) {
+            PreferencesUtils.incrementWaterCount(context)
+            clearAllNotifications(context)
+        }
 
         fun executeTask(context: Context, action: String?) {
             if (ACTION_INCREMENT_WATER_COUNT == action){
                 incrementWaterCount(context)
+            } else if (ACTION_CHARGING_REMINDER == action) {
+                incrementChargingReminder(context)
             }
-            //TODO: 004 - acrescente um else na função para chamar incrementWaterCount quando a action for igual a ACTION_CHARGING_REMINDER
         }
     }
 }
