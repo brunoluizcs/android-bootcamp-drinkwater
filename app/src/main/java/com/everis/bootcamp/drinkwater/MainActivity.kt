@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity(),
         setContentView(R.layout.activity_main)
 
         updateWaterCount()
+        //TODO 020 - faça a chamada do metodo updateChargingReminderCount
+
+        //TODO 018 - Realize o agendamento do serviço chamando DrinkWaterReminderUtils.scheduleChargingReminder
 
         imageview_cup_icon.setOnClickListener {
             incrementWaterHandler()
@@ -32,6 +35,11 @@ class MainActivity : AppCompatActivity(),
         val count = PreferencesUtils.getWaterCount(this)
         textview_quantity.text = "$count"
     }
+
+    //TODO: 019 - Crie uma função chamada updateChargingReminderCount
+    /*
+     * Para atualizar a quantidade de vezes que o usuário foi notificado
+     */
 
     fun incrementWaterHandler() {
         val intent = Intent(this, DrinkWaterReminderIntentService::class.java)
