@@ -5,11 +5,5 @@
     <string name="main_notification_channel_name">primary</string>
     <string name="charging_reminder_notification_title">Device carregando - está na hora de tomar um copo de água!</string>
     <string name="charging_reminder_notification_body">Não há hora melhor para tomar água do que quando o seu device esta carregando.</string>
-
-
-    <plurals name="charge_notification_count">
-        <item quantity="zero">Hidrate enquanto carrega, lembrete enviado %d vezes</item>
-        <item quantity="one">Hidrate enquanto carrega, lembrete enviado %d vez</item>
-        <item quantity="other">Hidrate enquanto carrega, lembrete enviado %d vezes</item>
-    </plurals>
+    <string name="charge_notification_count">Total de lembretes realizado: %d</string>
 </resources>
