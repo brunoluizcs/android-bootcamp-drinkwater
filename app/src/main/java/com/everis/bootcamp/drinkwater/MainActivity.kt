@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
+    //TODO: 007 - Crie uma propriedade do tipo MainBroadcastReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
