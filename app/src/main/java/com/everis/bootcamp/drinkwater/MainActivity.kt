@@ -1,9 +1,9 @@
 package com.everis.bootcamp.drinkwater
 
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.everis.bootcamp.sync.DrinkWaterReminderIntentService
 import com.everis.bootcamp.sync.DrinkWaterReminderTask
@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private val receiver = MainBroadcastReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity(),
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         prefs.registerOnSharedPreferenceChangeListener(this)
 
-        //TODO 009 - Faça a chamada para o método registerMainBroadcastReceiver
+        registerMainBroadcastReceiver()
     }
 
     fun updateWaterCount() {
@@ -50,26 +52,32 @@ class MainActivity : AppCompatActivity(),
         startService(intent)
     }
 
-    //TODO: 001 - Crie uma função chamada showPowerIndicator para mostrar o indicador de bateria
 
-    //TODO: 002 - Crie uma função chamada hidePowerIndicator para esconder o indicador de bateria
+    fun showPowerIndicator() {
+        imageview_battery.visibility = View.VISIBLE
+    }
 
-    /*TODO: 006 - Crie uma função chamada registerMainBroadcastReceiver
-     * - Esta função deve criar criar um IntentFilter para as actions Intent.ACTION_POWER_CONNECTED e Intent.ACTION_POWER_DISCONNECTED\
-     * - Chame o método da Activity chamado registerReceiver para registrar o broadcast receiver
-     */
+    fun hidePowerIndicator() {
+        imageview_battery.visibility = View.GONE
+    }
 
-    /*TODO: 008 - Crie uma função chamada unregisterMainBroadcastReceiver
-     * - Esta função deve chamar o método da activity unRegisterReceiver
-     */
+    fun registerMainBroadcastReceiver() {
+        val intentFilter = IntentFilter(Intent.ACTION_POWER_CONNECTED).apply {
+            this.addAction(Intent.ACTION_POWER_DISCONNECTED)
+        }
+        registerReceiver(receiver, intentFilter)
+    }
 
+
+    fun unregisterMainBroadcastReceiver() {
+        unregisterReceiver(receiver)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         prefs.unregisterOnSharedPreferenceChangeListener(this)
-
-        //TODO: 010 - Faça a chamada para o método unregisterMainBroadcastReceiver
+        unregisterMainBroadcastReceiver()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -80,12 +88,13 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    //TODO: 003 - Crie uma classe interna chamada MainBroadcastReceiver esta classe deve herdar de BroadcastReceiver
-
-    //TODO: 004 - Sobrescreva o metodo onReceive
-
-    /*TODO: 005 - No método onReceive verifique faça as verificações:
-     * - Se a action for igual Intent.ACTION_POWER_CONNECTED chame o método showPowerIndicator
-     * - Se a action for igual Intent.ACTION_POWER_DISCONNECTED chame o método hidePowerIndicator
-     */
+    inner class MainBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if  (intent?.action == Intent.ACTION_POWER_CONNECTED) {
+                showPowerIndicator()
+            } else if (intent?.action == Intent.ACTION_POWER_DISCONNECTED) {
+                hidePowerIndicator()
+            }
+        }
+    }
 }
