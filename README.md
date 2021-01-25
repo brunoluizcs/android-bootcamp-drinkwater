@@ -1,4 +1,4 @@
-# Scheduling Background Work with JobScheduler
+# Working with Broadcast Receivers
 
-Exercício prático sobre implementação de JobScheduler, realize o clone do projeto e faça checkout para a branch exercise-jobscheduler, a branch exercise-jobscheduler-completed possui o exercício resolvido para consulta.
+Exercício prático sobre implementação de Broadcast Receivers, realize o clone do projeto e faça checkout para a branch exercise-broadcast, a branch exercise-broadcast-completed possui o exercício resolvido para consulta.
 
