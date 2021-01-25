@@ -22,6 +22,7 @@ class DrinkWaterReminderTask {
         }
 
         //TODO: 002 - Criar função privada chamada incrementStretchingReminder para incrementar o contador de alongamentos com PreferencesUtils.incrementStretchingReminderCount
+        //A função deve receber um context como parametro
 
 
         fun executeTask(context: Context, action: String?) {

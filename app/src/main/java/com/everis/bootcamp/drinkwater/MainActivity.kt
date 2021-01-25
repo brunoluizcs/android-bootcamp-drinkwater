@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(),
 
     private val receiver = MainBroadcastReceiver()
 
-    //TODO: 010 - Crie uma propriedade optional do tipo AlarmManager
+    //TODO: 013 - Crie uma propriedade optional do tipo AlarmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(),
         updateWaterCount()
         updateChargingReminderCount()
 
-        //TODO: 015 realize a chamada do método updateStretchReminderCount
+        //TODO: 017 realize a chamada do método updateStretchReminderCount
 
         schedulerChargingReminder(this)
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(),
 
         registerMainBroadcastReceiver()
 
-        //TODO: 011 - Inicie a propriedade AlarmManager com o método getSystemService(ALARM_SERVICE)
+        //TODO: 019 - Inicie a propriedade AlarmManager com o método getSystemService(ALARM_SERVICE)
     }
 
     fun updateWaterCount() {
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(),
         } else if (PreferencesUtils.KEY_CHARGING_REMINDER_COUNT == key) {
             updateChargingReminderCount()
         }
-        //TODO: 016 - Inclua uma nova condição para que se a key for igual KEY_STRETCHING_REMINDER_COUNT chame a função updateStretchReminderCount
+        //TODO: 018 - Inclua uma nova condição para que se a key for igual KEY_STRETCHING_REMINDER_COUNT chame a função updateStretchReminderCount
     }
 
     inner class MainBroadcastReceiver : BroadcastReceiver() {
@@ -109,10 +109,10 @@ class MainActivity : AppCompatActivity(),
     }
 
 
-    //TODO: 012 - Dentro de startAlarm Realize a chamada do método startAlarmToStretch
+    //TODO: 015 - Dentro de startAlarm Realize a chamada do método startAlarmToStretch
     fun startAlarm(view: View) {}
     
-    //TODO: 013 - Dentro de stopAlarm Realize a chamada do método stopAlarmToStretch
+    //TODO: 016 - Dentro de stopAlarm Realize a chamada do método stopAlarmToStretch
     fun stopAlarm(view: View) {}
 
 }

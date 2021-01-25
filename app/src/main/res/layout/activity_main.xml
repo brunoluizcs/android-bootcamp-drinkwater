@@ -99,11 +99,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Total de alongamentos: 0"
-            app:layout_constraintBottom_toTopOf="@id/textview_tip"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
             android:id="@+id/textview_tip"
             android:fontFamily="sans-serif-condensed"
+            tools:visibility="visible"
+            android:visibility="gone"
             android:gravity="center"
             android:textSize="18sp"
             android:layout_marginStart="32dp"
