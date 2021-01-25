@@ -1,26 +1,44 @@
 package com.everis.bootcamp.alarmmanager
 
 import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 
 private const val STRETCHING_BROADCAST_REQUEST_ID = 2
+private const val ACTION_DRINK_WATER_STRETCH = "com.everis.bootcamp.drinkwater.stretching"
 
-//TODO: 008 - Crie uma constante do tipo string chamada ACTION_DRINK_WATER_STRETCH para representar a action com.everis.bootcamp.drinkwater.stretching
+fun startAlarmToStretch(context: Context, alarmManager: AlarmManager?) {
+    val intent = Intent().apply {
+        action = ACTION_DRINK_WATER_STRETCH
+        addCategory("android.intent.category.DEFAULT")
+    }
+    val pendingIntent = PendingIntent.getBroadcast(context, STRETCHING_BROADCAST_REQUEST_ID, intent,0)
+    alarmManager?.setInexactRepeating(
+        AlarmManager.RTC_WAKEUP,
+        System.currentTimeMillis() + 5000,
+        AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+        pendingIntent
+    )
+}
 
-/*TODO: 009 - Crie a função startAlarmToStretch
- * - A função deve receber como parâmetro um Context e um AlarmManager optional
- * - Na função crie uma Intent explicita com a action ACTION_DRINK_WATER_STRETCH e com a categoria android.intent.category.DEFAULT
- * - Crie uma PendingIntent através do método PendingIntent.getBroadcast informe como parametro contexto, STRETCHING_BROADCAST_REQUEST_ID e a intent criada, para flag pode informar 0
- * - Utilize a função setRepeating do alarmManager para rodar acada 30 segundos
- */
+fun stopAlarmToStretch(context: Context, alarmManager: AlarmManager?) {
+    val intent = Intent().apply {
+        action = ACTION_DRINK_WATER_STRETCH
+        addCategory("android.intent.category.DEFAULT")
+    }
+    val pendingIntent = PendingIntent.getBroadcast(context, STRETCHING_BROADCAST_REQUEST_ID, intent,0)
+    alarmManager?.cancel(pendingIntent)
+}
 
-/*TODO: 009 - Crie a função startAlarmToStretch
-* - A função deve receber como parâmetro um Context e um AlarmManager optional
-* - Na função crie uma Intent explicita com a action ACTION_DRINK_WATER_STRETCH e com a categoria android.intent.category.DEFAULT
-* - Crie uma PendingIntent através do método PendingIntent.getBroadcast informe como parametro contexto, STRETCHING_BROADCAST_REQUEST_ID e a intent criada, para flag pode informar 0
-* - utiliza a função cancel informando a PendingIntent para cancelar o alarme
-*/
-fun stopAlarmToStretch(alarmManager: AlarmManager) {
+fun registerStretchingReceiver(context: Context, receiver: StretchingBroadcastReceiver) {
+    val intentFilter = IntentFilter(ACTION_DRINK_WATER_STRETCH).apply {
+        addCategory("android.intent.category.DEFAULT")
+    }
+    context.registerReceiver(receiver,intentFilter)
+}
 
-
+fun unregisterStretchingReceiver(context: Context, receiver: StretchingBroadcastReceiver) {
+    context.unregisterReceiver(receiver)
 }

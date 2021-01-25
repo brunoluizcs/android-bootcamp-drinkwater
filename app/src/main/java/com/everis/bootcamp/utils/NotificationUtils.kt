@@ -16,9 +16,9 @@ import androidx.core.content.ContextCompat
 import com.everis.bootcamp.drinkwater.R
 import com.everis.bootcamp.drinkwater.StretchingActivity
 
-
 private val WATER_REMINDER_NOTIFICATION_ID = 1138
 private val WATER_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel"
+private val STRETHCING_REMINDER_NOTIFICATION_CHANNEL_ID = "stretching_reminder_notification_channel"
 private val STRETCHING_REMINDER_REQUEST_CODE = 1
 private val STRETCHING_NOTIFICATION_ID = 1139
 
@@ -30,7 +30,17 @@ fun clearAllNotifications(context: Context) {
 fun reminderUserToStretch(context: Context) {
     val notificationManager = NotificationManagerCompat.from(context)
 
-    val stretchingNotification = NotificationCompat.Builder(context)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val mChannel = NotificationChannel(
+            STRETHCING_REMINDER_NOTIFICATION_CHANNEL_ID,
+            context.getString(R.string.main_notification_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationManager.createNotificationChannel(mChannel)
+    }
+
+    val stretchingNotification = NotificationCompat.Builder(context, STRETHCING_REMINDER_NOTIFICATION_CHANNEL_ID)
+
     stretchingNotification.setContentTitle(context.getString(R.string.stretching_reminder_title))
     stretchingNotification.setContentText(context.getText(R.string.stretching_reminder_body))
     stretchingNotification.setSmallIcon(R.drawable.ic_drink_notification)

@@ -1,10 +1,13 @@
 package com.everis.bootcamp.drinkwater
 
+import android.app.AlarmManager
 import android.content.*
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.everis.bootcamp.alarmmanager.*
 import com.everis.bootcamp.sync.DrinkWaterReminderIntentService
 import com.everis.bootcamp.sync.DrinkWaterReminderTask
 import com.everis.bootcamp.sync.schedulerChargingReminder
@@ -15,8 +18,9 @@ class MainActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val receiver = MainBroadcastReceiver()
+    private val stretchingReceiver = StretchingBroadcastReceiver()
 
-    //TODO: 010 - Crie uma propriedade optional do tipo AlarmManager
+    private var alarmManager: AlarmManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +28,7 @@ class MainActivity : AppCompatActivity(),
 
         updateWaterCount()
         updateChargingReminderCount()
-
-        //TODO: 015 realize a chamada do método updateStretchReminderCount
+        updateStretchReminderCount()
 
         schedulerChargingReminder(this)
 
@@ -38,8 +41,11 @@ class MainActivity : AppCompatActivity(),
 
         registerMainBroadcastReceiver()
 
-        //TODO: 011 - Inicie a propriedade AlarmManager com o método getSystemService(ALARM_SERVICE)
+        alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        registerStretchingReceiver(this, stretchingReceiver)
     }
+
 
     fun updateWaterCount() {
         val count = PreferencesUtils.getWaterCount(this)
@@ -52,7 +58,11 @@ class MainActivity : AppCompatActivity(),
         textview_charging_reminder.text = message
     }
 
-    //TODO: 014 - Crie um método chamado updateStretchReminderCount e atualize o textview_stretching_reminder com o valor de PreferencesUtils.getStretchingReminderCount
+    fun updateStretchReminderCount() {
+        val count = PreferencesUtils.getStretchingReminderCount(this)
+        val message = getString(R.string.stretching_notification_count, count)
+        textview_stretching_reminder.text = message
+    }
 
     fun incrementWaterHandler() {
         val intent = Intent(this, DrinkWaterReminderIntentService::class.java)
@@ -87,15 +97,21 @@ class MainActivity : AppCompatActivity(),
         prefs.unregisterOnSharedPreferenceChangeListener(this)
 
         unregisterMainBroadcastReceiver()
+        unregisterStretchingReceiver(this, stretchingReceiver)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (PreferencesUtils.KEY_WATER_COUNT == key) {
-            updateWaterCount()
-        } else if (PreferencesUtils.KEY_CHARGING_REMINDER_COUNT == key) {
-            updateChargingReminderCount()
+        when (key) {
+            PreferencesUtils.KEY_WATER_COUNT -> {
+                updateWaterCount()
+            }
+            PreferencesUtils.KEY_CHARGING_REMINDER_COUNT -> {
+                updateChargingReminderCount()
+            }
+            PreferencesUtils.KEY_STRETCHING_REMINDER_COUNT -> {
+                updateStretchReminderCount()
+            }
         }
-        //TODO: 016 - Inclua uma nova condição para que se a key for igual KEY_STRETCHING_REMINDER_COUNT chame a função updateStretchReminderCount
     }
 
     inner class MainBroadcastReceiver : BroadcastReceiver() {
@@ -108,11 +124,12 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-
-    //TODO: 012 - Dentro de startAlarm Realize a chamada do método startAlarmToStretch
-    fun startAlarm(view: View) {}
+    fun startAlarm(view: View) {
+        startAlarmToStretch(applicationContext, alarmManager)
+    }
     
-    //TODO: 013 - Dentro de stopAlarm Realize a chamada do método stopAlarmToStretch
-    fun stopAlarm(view: View) {}
+    fun stopAlarm(view: View) {
+        stopAlarmToStretch(applicationContext, alarmManager)
+    }
 
 }

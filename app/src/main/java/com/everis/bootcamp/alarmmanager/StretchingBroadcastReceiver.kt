@@ -1,10 +1,19 @@
 package com.everis.bootcamp.alarmmanager
 
-//TODO: 004 - Crie a classe StretchingBroadcastReceiver de modo que ela herde de BroadcastReceiver
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import com.everis.bootcamp.sync.DrinkWaterReminderIntentService
+import com.everis.bootcamp.sync.DrinkWaterReminderTask
+import com.everis.bootcamp.utils.reminderUserToStretch
 
-//TODO: 005 - Sobrescreva o método onReceiver
+class StretchingBroadcastReceiver : BroadcastReceiver() {
 
-/*TODO: 006 - Em onReceiver faça a chamada para o método NotificationUtils.reminderUserToStretch
- - Crie uma Intent explicita para dar start no Service DrinkWaterReminderIntentService
- - Na Intent criada informe a action ACTION_STRETCHING_REMINDER
-*/
+    override fun onReceive(context: Context?, intent: Intent?) {
+        context?.let { reminderUserToStretch(it) }
+
+        val myIntent = Intent(context, DrinkWaterReminderIntentService::class.java)
+        myIntent.action = DrinkWaterReminderTask.ACTION_STRETCHING_REMINDER
+        context?.startService(myIntent)
+    }
+}

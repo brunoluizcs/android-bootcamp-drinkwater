@@ -3,6 +3,8 @@
           package="com.everis.bootcamp.drinkwater">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
 
     <application
             android:allowBackup="true"
@@ -21,9 +23,14 @@
             </intent-filter>
         </activity>
 
-        <!-- TODO: 007 - inclua no manifest o receiver StretchingBroadcastReceiver e inclua a intent filter para -->
-        <!-- inclua no receiver a intent-filter para action com.everis.bootcamp.drinkwater.stretching -->
-        <!-- inclua no receiver a categoria android.intent.category.DEFAULT -->
+        <receiver android:name="com.everis.bootcamp.alarmmanager.StretchingBroadcastReceiver"
+                  android:enabled="true"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="com.everis.bootcamp.drinkwater.stretching"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
 
         <service
                 android:name="com.everis.bootcamp.sync.DrinkWaterReminderIntentService"
