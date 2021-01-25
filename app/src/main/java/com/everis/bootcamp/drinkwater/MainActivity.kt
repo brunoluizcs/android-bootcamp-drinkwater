@@ -1,9 +1,9 @@
 package com.everis.bootcamp.drinkwater
 
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.everis.bootcamp.sync.DrinkWaterReminderIntentService
 import com.everis.bootcamp.sync.DrinkWaterReminderTask
@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    //TODO: 007 - Crie uma propriedade do tipo MainBroadcastReceiver
+    private val receiver = MainBroadcastReceiver()
+
+    //TODO: 010 - Crie uma propriedade optional do tipo AlarmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity(),
 
         updateWaterCount()
         updateChargingReminderCount()
+
+        //TODO: 015 realize a chamada do método updateStretchReminderCount
 
         schedulerChargingReminder(this)
 
@@ -32,7 +36,9 @@ class MainActivity : AppCompatActivity(),
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         prefs.registerOnSharedPreferenceChangeListener(this)
 
-        //TODO 009 - Faça a chamada para o método registerMainBroadcastReceiver
+        registerMainBroadcastReceiver()
+
+        //TODO: 011 - Inicie a propriedade AlarmManager com o método getSystemService(ALARM_SERVICE)
     }
 
     fun updateWaterCount() {
@@ -46,24 +52,33 @@ class MainActivity : AppCompatActivity(),
         textview_charging_reminder.text = message
     }
 
+    //TODO: 014 - Crie um método chamado updateStretchReminderCount e atualize o textview_stretching_reminder com o valor de PreferencesUtils.getStretchingReminderCount
+
     fun incrementWaterHandler() {
         val intent = Intent(this, DrinkWaterReminderIntentService::class.java)
         intent.action = DrinkWaterReminderTask.ACTION_INCREMENT_WATER_COUNT
         startService(intent)
     }
 
-    //TODO: 001 - Crie uma função chamada showPowerIndicator para mostrar o indicador de bateria
+    fun showPowerIndicator() {
+        imageview_battery.visibility = View.VISIBLE
+    }
 
-    //TODO: 002 - Crie uma função chamada hidePowerIndicator para esconder o indicador de bateria
+    fun hidePowerIndicator() {
+        imageview_battery.visibility = View.GONE
+    }
 
-    /*TODO: 006 - Crie uma função chamada registerMainBroadcastReceiver
-     * - Esta função deve criar criar um IntentFilter para as actions Intent.ACTION_POWER_CONNECTED e Intent.ACTION_POWER_DISCONNECTED\
-     * - Chame o método da Activity chamado registerReceiver para registrar o broadcast receiver
-     */
+    fun registerMainBroadcastReceiver() {
+        val intentFilter = IntentFilter(Intent.ACTION_POWER_CONNECTED).apply {
+            this.addAction(Intent.ACTION_POWER_DISCONNECTED)
+        }
+        registerReceiver(receiver, intentFilter)
 
-    /*TODO: 008 - Crie uma função chamada unregisterMainBroadcastReceiver
-     * - Esta função deve chamar o método da activity unRegisterReceiver
-     */
+    }
+
+    fun unregisterMainBroadcastReceiver() {
+        unregisterReceiver(receiver)
+    }
 
 
     override fun onDestroy() {
@@ -71,7 +86,7 @@ class MainActivity : AppCompatActivity(),
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         prefs.unregisterOnSharedPreferenceChangeListener(this)
 
-        //TODO: 010 - Faça a chamada para o método unregisterMainBroadcastReceiver
+        unregisterMainBroadcastReceiver()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -80,14 +95,24 @@ class MainActivity : AppCompatActivity(),
         } else if (PreferencesUtils.KEY_CHARGING_REMINDER_COUNT == key) {
             updateChargingReminderCount()
         }
+        //TODO: 016 - Inclua uma nova condição para que se a key for igual KEY_STRETCHING_REMINDER_COUNT chame a função updateStretchReminderCount
     }
 
-    //TODO: 003 - Crie uma classe interna chamada MainBroadcastReceiver esta classe deve herdar de BroadcastReceiver
+    inner class MainBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if  (intent?.action == Intent.ACTION_POWER_CONNECTED) {
+                showPowerIndicator()
+            } else if (intent?.action == Intent.ACTION_POWER_DISCONNECTED) {
+                hidePowerIndicator()
+            }
+        }
+    }
 
-    //TODO: 004 - Sobrescreva o metodo onReceive
 
-    /*TODO: 005 - No método onReceive verifique faça as verificações:
-     * - Se a action for igual Intent.ACTION_POWER_CONNECTED chame o método showPowerIndicator
-     * - Se a action for igual Intent.ACTION_POWER_DISCONNECTED chame o método hidePowerIndicator
-     */
+    //TODO: 012 - Dentro de startAlarm Realize a chamada do método startAlarmToStretch
+    fun startAlarm(view: View) {}
+    
+    //TODO: 013 - Dentro de stopAlarm Realize a chamada do método stopAlarmToStretch
+    fun stopAlarm(view: View) {}
+
 }

@@ -8,6 +8,35 @@
         android:background="@color/colorPrimary"
         tools:context=".MainActivity">
 
+    <Button
+            android:id="@+id/button_start_alarm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_stop_alarm"
+            android:layout_marginBottom="16dp"
+            android:onClick="startAlarm"
+            android:fontFamily="sans-serif-condensed"
+            android:backgroundTint="#1EBEA5"
+            android:text="iniciar alarm manager"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/button_stop_alarm"
+            android:onClick="stopAlarm"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed"
+            app:layout_constraintStart_toStartOf="@id/button_start_alarm"
+            app:layout_constraintEnd_toEndOf="@id/button_start_alarm"
+            app:layout_constraintBottom_toTopOf="@id/imageview_cup_icon"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="#FD82AB"
+            android:text="parar alarm manager"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+
     <ImageView
         android:id="@+id/imageview_cup_icon"
         android:background="?attr/selectableItemBackgroundBorderless"
@@ -53,10 +82,23 @@
             android:textSize="18sp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="lembrete enquanto carrega"
+            app:layout_constraintBottom_toTopOf="@id/textview_stretching_reminder"/>
+
+    <TextView
+            android:id="@+id/textview_stretching_reminder"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Total de alongamentos: 0"
             app:layout_constraintBottom_toTopOf="@id/textview_tip"/>
 
     <TextView

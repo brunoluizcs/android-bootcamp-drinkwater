@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.everis.bootcamp.drinkwater">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
             android:allowBackup="true"
@@ -11,6 +11,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".StretchingActivity">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,14 +21,19 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.everis.bootcamp.sync.DrinkWaterReminderIntentService"
-                 android:exported="false"/>
+        <!-- TODO: 007 - inclua no manifest o receiver StretchingBroadcastReceiver e inclua a intent filter para -->
+        <!-- inclua no receiver a intent-filter para action com.everis.bootcamp.drinkwater.stretching -->
+        <!-- inclua no receiver a categoria android.intent.category.DEFAULT -->
 
-        <service android:name="com.everis.bootcamp.sync.DrinkWaterReminderJobService"
-                 android:permission="android.permission.BIND_JOB_SERVICE"
-                 android:exported="true"/>
+        <service
+                android:name="com.everis.bootcamp.sync.DrinkWaterReminderIntentService"
+                android:exported="false"/>
+        <service
+                android:name="com.everis.bootcamp.sync.DrinkWaterReminderJobService"
+                android:exported="true"
+                android:permission="android.permission.BIND_JOB_SERVICE"/>
 
-        <!-- TODO: 011 - Adicione o MainBroadcastReceiver no AndroidManifest -->
-</application>
+        <receiver android:name=".MainActivity$MainBroadcastReceiver"/>
+    </application>
 
 </manifest>

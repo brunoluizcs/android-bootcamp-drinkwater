@@ -3,22 +3,45 @@ package com.everis.bootcamp.utils
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.everis.bootcamp.drinkwater.R
+import com.everis.bootcamp.drinkwater.StretchingActivity
 
 
 private val WATER_REMINDER_NOTIFICATION_ID = 1138
 private val WATER_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel"
+private val STRETCHING_REMINDER_REQUEST_CODE = 1
+private val STRETCHING_NOTIFICATION_ID = 1139
 
 fun clearAllNotifications(context: Context) {
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     notificationManager.cancelAll()
+}
+
+fun reminderUserToStretch(context: Context) {
+    val notificationManager = NotificationManagerCompat.from(context)
+
+    val stretchingNotification = NotificationCompat.Builder(context)
+    stretchingNotification.setContentTitle(context.getString(R.string.stretching_reminder_title))
+    stretchingNotification.setContentText(context.getText(R.string.stretching_reminder_body))
+    stretchingNotification.setSmallIcon(R.drawable.ic_drink_notification)
+
+    val intent = Intent(context, StretchingActivity::class.java)
+    val pendingIntent = PendingIntent.getActivity(context, STRETCHING_REMINDER_REQUEST_CODE, intent, 0)
+    stretchingNotification.setContentIntent(pendingIntent)
+
+    stretchingNotification.setAutoCancel(true)
+
+    notificationManager.notify(STRETCHING_NOTIFICATION_ID, stretchingNotification.build())
 }
 
 fun remindUserBecauseCharging(context: Context) {
